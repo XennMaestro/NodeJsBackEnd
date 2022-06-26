@@ -20,7 +20,8 @@
   "homepage": "https://github.com/XennMaestro/NodeJsBackEnd#readme",
   "dependencies": {
     "dotenv": "^16.0.1",
-    "express": "^4.18.1"
+    "express": "^4.18.1",
+    "mongoose": "^5.13.14"
   },
   "devDependencies": {
     "eslint": "^8.18.0",
