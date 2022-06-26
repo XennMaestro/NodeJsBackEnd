@@ -10,7 +10,8 @@ router
 
     router
     .route('/:id')
-    .get()
-    .post();
+    .get(tourController.getUser)
+    .delete(tourController.deleteUser)
+    .patch(tourController.updateUser);
 
 module.exports = router;    

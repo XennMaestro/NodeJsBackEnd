@@ -6,7 +6,9 @@ const userRouter = require('./routes/userRoutes');
 
 //Global MiddleWare
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({
+    extended: true
+}));
 
 //Routes
 app.use('/api/v1/users', userRouter);
