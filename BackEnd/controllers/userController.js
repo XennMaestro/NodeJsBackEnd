@@ -1,4 +1,5 @@
 const User = require("../models/userModel");
+const APIFeatures = require("../Utils/apiFeatures");
 
 //Post a new user in the database
 exports.getUser = async (req, res) => {
@@ -23,20 +24,14 @@ exports.getUser = async (req, res) => {
 exports.getAllUsers = async (req, res) => {
     try{
         //BUILD QUERY
-        //1) Basic Filtering
-        const queryObj = { ...req.query };
-        const excludedFields = ['page','sort','limit','fields'];
-        excludedFields.forEach(el => delete queryObj[el]);
-
-        //2) Advanced Filtering
-        let queryStr = JSON.stringify(queryObj);
-        queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
-        console.log(queryStr);
-
-        const query = User.find(JSON.parse(queryStr));
+        const features = new APIFeatures(User.find(), req.query)
+        .filter()
+        .sort()
+        .limitFields()
+        .paginate();
 
         //EXECUTE QUERY
-        const users = await query;
+        const users = await features.query;
 
         res.status(200).json({
             status: 'success',
