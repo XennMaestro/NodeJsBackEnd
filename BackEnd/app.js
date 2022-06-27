@@ -2,7 +2,12 @@ const express = require('express');
 
 const app = express();
 
+const AppError = require('./Utils/appError');
+
+const globalErrorHandler = require('./controllers/errorController');
+
 const userRouter = require('./routes/userRoutes');
+
 
 //Global MiddleWare
 app.use(express.json());
@@ -15,10 +20,10 @@ app.use('/api/v1/users', userRouter);
 
 //Undefined Route Handler
 app.all('*', (req, res, next) => {
-    res.status(404).json({
-        status: 'fail',
-        message: `Can't find ${req.originalUrl} on this server`
-    });
+    next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
 });
+
+//Error handling middleware
+app.use(globalErrorHandler);
 
 module.exports = app;
