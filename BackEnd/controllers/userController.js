@@ -1,4 +1,5 @@
 const User = require("../models/userModel");
+const APIFeatures = require("../Utils/apiFeatures");
 
 //Post a new user in the database
 exports.getUser = async (req, res) => {
@@ -22,7 +23,15 @@ exports.getUser = async (req, res) => {
 //Get all of the current user in the Database
 exports.getAllUsers = async (req, res) => {
     try{
-        const users = await User.find();
+        //BUILD QUERY
+        const features = new APIFeatures(User.find(), req.query)
+        .filter()
+        .sort()
+        .limitFields()
+        .paginate();
+
+        //EXECUTE QUERY
+        const users = await features.query;
 
         res.status(200).json({
             status: 'success',
