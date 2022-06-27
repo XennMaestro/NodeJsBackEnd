@@ -18,12 +18,29 @@ mongoose.connect(DB, {
     useCreateIndex: true,
     useFindAndModify: false,
     useUnifiedTopology: true
-}).then(() => {
-    console.log('DB Connection was successful');
-});
+})
+.then(() => console.log('DB Connection was successful'));
 
 //Server Start
-app.listen(port, () => {
+const server = app.listen(port, () => {
     console.log(`App running on port ${port}...`);
 });
+
+//Handle all Promise rejection handler
+process.on('unhandledRejection', err => {
+    console.log('UNHANDLED REJECTION! Shutting down...');
+    console.log(err.name, err.message);
+    server.close(() => {
+        process.exit(1);
+    });
+})
+
+//Handle all uncaught exceptions
+process.on('uncaughtException', err => {
+    console.log('UNCAUGHT EXCEPTION! Shutting down...');
+    console.log(err.name, err.message);
+    server.close(() => {
+        process.exit(1);
+    });
+})
 

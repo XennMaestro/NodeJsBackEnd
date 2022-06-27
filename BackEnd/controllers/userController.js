@@ -1,106 +1,85 @@
 const User = require("../models/userModel");
 const APIFeatures = require("../Utils/apiFeatures");
+const catchAsync = require("../Utils/catchAsync");
+const AppError = require("../Utils/appError");
 
 //Post a new user in the database
-exports.getUser = async (req, res) => {
-    try{
-        const user = await User.findById(req.params.id);
+exports.getUser = catchAsync(async (req, res, next) => {
+    const user = await User.findById(req.params.id);
 
-        res.status(200).json({
-            status: 'success',
-            data: {
-                user
-            }
-        });
-    } catch (err) {
-        res.status(404).json({
-            status: 'fail',
-            message: err
-        });
+    if(!user){
+      return next(new AppError('No user found with that ID', 404));
     }
-};
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            user
+        }
+    });
+});
 
 //Get all of the current user in the Database
-exports.getAllUsers = async (req, res) => {
-    try{
-        //BUILD QUERY
-        const features = new APIFeatures(User.find(), req.query)
-        .filter()
-        .sort()
-        .limitFields()
-        .paginate();
+exports.getAllUsers = catchAsync(async (req, res) => {
+    //BUILD QUERY
+    const features = new APIFeatures(User.find(), req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
 
-        //EXECUTE QUERY
-        const users = await features.query;
+    //EXECUTE QUERY
+    const users = await features.query;
 
-        res.status(200).json({
-            status: 'success',
-            results: users.length,
-            data: {
-                users
-            }
-        });
-    } catch (err) {
-        res.status(404).json({
-            status: 'fail',
-            message: err
-        });
-    }
-};
+    res.status(200).json({
+        status: 'success',
+        results: users.length,
+        data: {
+            users
+        }
+    });
+});
 
 //Post a new user in the database
-exports.createUser = async (req, res) => {
-    try{
-        const newUser = await User.create(req.body);
+exports.createUser = catchAsync(async (req, res, next) => {
+    const newUser = await User.create(req.body);
 
-        res.status(201).json({
-            status: 'success',
-            data: {
-                user: newUser
-            }
-        });
-    } catch (err) {
-        res.status(400).json({
-            status: 'fail',
-            message: err
-        });
-    }
-};
+    res.status(201).json({
+        status: 'success',
+        data: {
+            user: newUser
+        }
+    });
+});
 
 //Patch a new user in the database
-exports.updateUser = async (req, res) => {
-    try{
-        const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-            new: true,
-            runValidators: true
-        });
+exports.updateUser = catchAsync(async (req, res, next) => {
+    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+        runValidators: true
+    });
 
-        res.status(200).json({
-            status: 'success',
-            data: {
-                user
-            }
-        });
-    } catch (err) {
-        res.status(404).json({
-            status: 'fail',
-            message: err
-        });
+    if(!user){
+        return next(new AppError('No user found with that ID', 404));
     }
-};
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            user
+        }
+    });
+});
 
 //Delete a new user in the database
-exports.deleteUser = async (req, res) => {
-    try{
-        await User.findByIdAndDelete(req.params.id);
+exports.deleteUser = catchAsync(async (req, res, next) => {
+    const user = await User.findByIdAndDelete(req.params.id);
 
-        res.status(204).json({
-            status: 'success'
-        });
-    } catch (err) {
-        res.status(404).json({
-            status: 'fail',
-            message: err
-        });
+    if(!user){
+        return next(new AppError('No user found with that ID', 404));
     }
-};
+
+    res.status(204).json({
+        status: 'success'
+    });
+});
