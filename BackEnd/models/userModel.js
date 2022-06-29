@@ -11,6 +11,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Missing user last name']
     },
+    role: {
+        type: String,
+        required: [true, 'Missing user role'],
+        enum: ['admin', 'regular'],
+        default : 'regular'
+    },
     password: {
         type: String,
         required: [true, 'Missing user password'],
