@@ -61,6 +61,10 @@ const userSchema = new mongoose.Schema({
         type: Number,
         required: [true, 'Missing user age']
     },
+    photo: {
+      type: String,
+      default: 'test.jpg'
+    }
 });
 
 userSchema.pre('save', async function(next) {
