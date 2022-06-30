@@ -55,7 +55,8 @@ exports.signup = catchAsync(async (req, res, next) => {
         passwordChangedAt: req.body.passwordChangedAt,
         email: req.body.email,
         age: req.body.age,
-        role: req.body.role
+        role: req.body.role,
+        photo: req.body.photo
     });
     createSendToken(newUser, 201, res);
 });
