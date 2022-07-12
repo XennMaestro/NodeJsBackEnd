@@ -14,6 +14,8 @@ const xss = require('xss-clean');
 
 const hpp = require('hpp');
 
+const cors = require('cors');
+
 const AppError = require('./utils/appError');
 
 const globalErrorHandler = require('./controllers/errorController');
@@ -22,6 +24,10 @@ const userRouter = require('./routes/userRoutes');
 
 
 //1)Global MiddleWare
+
+    //Enable cors requests
+    app.use(cors());
+
     //Security HTTP Headers
     app.use(helmet());
 
