@@ -1,0 +1,27 @@
+[
+    {
+      "_id":"62cdc940adaf042cd42023e6",
+      "name":"Shehryar Awan Electronics",
+      "summary":"Electronics Store",
+      "description":"Brand new electronics for sale",
+      "location": {
+        "description": "Maryland, USA",
+        "type": "Point",
+        "coordinates": [39.17890825618904, -77.31465579239496],
+        "address": "319620 White Ground Rd, Boyds, MD 20841, USA"
+      }
+    },
+    {
+      "_id":"62cdc940adaf042cd42023e7",
+      "name":"Tanveer Awan Electronics",
+      "summary":"Electronics Store",
+      "description":"Brand new electronics for sale",
+      "location": {
+        "description": "Maryland, USA",
+        "type": "Point",
+        "coordinates": [39.18777878552843, -77.32989677125627],
+        "address": "20201 Bucklodge Rd, Boyds, MD 20841, USA"
+      }
+    }
+  ]
+  

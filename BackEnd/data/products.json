@@ -1,0 +1,19 @@
+[
+    {
+      "name":"Vitamin A",
+      "quantity": 100,
+      "price": 20,
+      "summary": "100 pills per box. 5 mg each.",
+      "description":"Vitamin A is good for health and skin.",
+      "shop":"62cdc940adaf042cd42023e6"
+    },
+    {
+        "name":"Vitamin D",
+        "quantity": 100,
+        "price": 25,
+        "summary": "80 pills per box. 5 mg each.",
+        "description":"Vitamin D is good for Teeth and Hair.",
+        "shop":"62cdc940adaf042cd42023e7"
+    }
+  ]
+  
